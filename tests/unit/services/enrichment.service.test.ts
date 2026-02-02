@@ -1,3 +1,4 @@
+import { describe, expect, it, beforeEach } from 'vitest';
 import { EnrichmentService } from '../../../src/services/enrichment.service';
 import { PageViewEvent } from '../../../src/types/events';
 

@@ -57,7 +57,8 @@ export interface StoredEvent {
   updatedAt: Date;
 }
 
-export interface EnrichedEvent extends Event {
+export interface EnrichedEvent {
+  event: Event;
   metadata: {
     receivedAt: string;
     ipAddress?: string;

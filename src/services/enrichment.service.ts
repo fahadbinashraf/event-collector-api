@@ -5,7 +5,7 @@ import logger from '../utils/logger';
 export class EnrichmentService {
   enrichEvent(event: Event, ipAddress?: string, userAgent?: string): EnrichedEvent {
     const enriched: EnrichedEvent = {
-      ...event,
+      event,
       metadata: {
         receivedAt: new Date().toISOString(),
         ipAddress,
@@ -35,7 +35,7 @@ export class EnrichmentService {
     }
 
     logger.debug('Event enriched', {
-      eventType: event.eventType,
+      eventType: enriched.event.eventType,
       hasGeo: !!enriched.metadata.geo,
       hasBrowser: !!enriched.metadata.browser,
     });

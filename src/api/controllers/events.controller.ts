@@ -4,7 +4,7 @@ import { Event, EventQuery } from '../../types/events';
 import logger from '../../utils/logger';
 
 export class EventsController {
-  private eventProcessor: EventProcessorService;
+  private readonly eventProcessor: EventProcessorService;
 
   constructor() {
     this.eventProcessor = new EventProcessorService();
@@ -76,7 +76,7 @@ export class EventsController {
     }
   };
 
-  getStatistics = async (req: Request, res: Response, next: NextFunction) => {
+  getStatistics = async (_req: Request, res: Response, next: NextFunction) => {
     try {
       const stats = await this.eventProcessor.getStatistics();
 

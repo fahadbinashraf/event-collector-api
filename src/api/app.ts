@@ -32,8 +32,8 @@ export const createApp = (): Application => {
 
   // Rate limiting
   const limiter = rateLimit({
-    windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS || '900000', 10), // 15 minutes
-    max: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || '100', 10),
+    windowMs: Number.parseInt(process.env.RATE_LIMIT_WINDOW_MS || '900000', 10), // 15 minutes
+    max: Number.parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || '100', 10),
     message: 'Too many requests from this IP, please try again later.',
     standardHeaders: true,
     legacyHeaders: false,
@@ -42,7 +42,7 @@ export const createApp = (): Application => {
   app.use('/api/events', limiter);
 
   // Request logging
-  app.use((req, res, next) => {
+  app.use((req, _res, next) => {
     logger.info('Incoming request', {
       method: req.method,
       path: req.path,
@@ -57,7 +57,7 @@ export const createApp = (): Application => {
   app.use('/api/events', eventsRoutes);
 
   // Root endpoint
-  app.get('/', (req, res) => {
+  app.get('/', (_req, res) => {
     res.json({
       name: 'Event Collector API',
       version: '1.0.0',

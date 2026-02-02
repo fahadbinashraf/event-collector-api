@@ -1,4 +1,5 @@
-import request from 'supertest';
+import request, {Response} from 'supertest';
+import { describe, it, expect } from 'vitest';
 import { createApp } from '../../src/api/app';
 
 describe('API Integration Tests', () => {
@@ -6,7 +7,7 @@ describe('API Integration Tests', () => {
 
   describe('GET /', () => {
     it('should return API information', async () => {
-      const response = await request(app).get('/');
+      const response: Response = await request(app).get('/');
 
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty('name');
@@ -17,7 +18,7 @@ describe('API Integration Tests', () => {
 
   describe('GET /health', () => {
     it('should return health status', async () => {
-      const response = await request(app).get('/health');
+      const response: Response = await request(app).get('/health');
 
       expect(response.status).toBeGreaterThanOrEqual(200);
       expect(response.body).toHaveProperty('status');
@@ -39,7 +40,7 @@ describe('API Integration Tests', () => {
         },
       };
 
-      const response = await request(app)
+      const response: Response = await request(app)
         .post('/api/events')
         .send(event)
         .set('Content-Type', 'application/json');
@@ -62,7 +63,7 @@ describe('API Integration Tests', () => {
         },
       };
 
-      const response = await request(app)
+      const response: Response = await request(app)
         .post('/api/events')
         .send(event)
         .set('Content-Type', 'application/json');
@@ -82,7 +83,7 @@ describe('API Integration Tests', () => {
         },
       };
 
-      const response = await request(app)
+      const response: Response = await request(app)
         .post('/api/events')
         .send(event)
         .set('Content-Type', 'application/json');

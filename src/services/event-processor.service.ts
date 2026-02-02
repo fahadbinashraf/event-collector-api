@@ -4,8 +4,8 @@ import { EnrichmentService } from './enrichment.service';
 import logger from '../utils/logger';
 
 export class EventProcessorService {
-  private repository: EventsRepository;
-  private enrichmentService: EnrichmentService;
+  private readonly repository: EventsRepository;
+  private readonly enrichmentService: EnrichmentService;
 
   constructor() {
     this.repository = new EventsRepository();
@@ -26,16 +26,16 @@ export class EventProcessorService {
     const enrichedEvent = this.enrichmentService.enrichEvent(event, ipAddress, userAgent);
 
     // Store in database
-    const storedEvent = await this.repository.createEvent(
-      event.eventType,
-      event.userId,
-      event.sessionId,
-      new Date(event.timestamp),
-      event,
-      enrichedEvent.metadata,
+    const storedEvent = await this.repository.createEvent({
+      eventType: event.eventType,
+      userId: event.userId,
+      sessionId: event.sessionId,
+      timestamp: new Date(event.timestamp),
+      rawData: event as unknown as Record<string, unknown>,
+      enrichedData: enrichedEvent.metadata,
       ipAddress,
-      userAgent
-    );
+      userAgent,
+    });
 
     logger.info('Event processed successfully', {
       eventId: storedEvent.id,

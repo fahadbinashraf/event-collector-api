@@ -3,7 +3,7 @@ import Database from '../../database/connection';
 import { HealthCheckResponse } from '../../types/events';
 
 export class HealthController {
-  async healthCheck(req: Request, res: Response) {
+  async healthCheck(_req: Request, res: Response) {
     const startTime = Date.now();
     const db = Database.getInstance();
     const dbHealthy = await db.healthCheck();

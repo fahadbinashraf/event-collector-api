@@ -18,23 +18,26 @@ interface DatabaseRow {
   updated_at: Date;
 }
 
+interface CreateEventParams {
+  eventType: string;
+  userId: string | undefined;
+  sessionId: string | undefined;
+  timestamp: Date;
+  rawData: Record<string, unknown>;
+  enrichedData?: Record<string, unknown>;
+  ipAddress?: string;
+  userAgent?: string;
+}
+
 export class EventsRepository {
-  private pool: Pool;
+  private readonly pool: Pool;
 
   constructor() {
     this.pool = Database.getInstance().getPool();
   }
 
-  async createEvent(
-    eventType: string,
-    userId: string | undefined,
-    sessionId: string | undefined,
-    timestamp: Date,
-    rawData: Record<string, unknown>,
-    enrichedData?: Record<string, unknown>,
-    ipAddress?: string,
-    userAgent?: string
-  ): Promise<StoredEvent> {
+  async createEvent(params: CreateEventParams): Promise<StoredEvent> {
+    const { eventType, userId, sessionId, timestamp, rawData, enrichedData, ipAddress, userAgent } = params;
     const id = uuidv4();
     const query = `
       INSERT INTO events (
@@ -103,7 +106,7 @@ export class EventsRepository {
     // Get total count
     const countQuery = `SELECT COUNT(*) as total FROM events ${whereClause}`;
     const countResult = await this.pool.query(countQuery, params);
-    const total = parseInt(countResult.rows[0].total, 10);
+    const total = Number.parseInt(countResult.rows[0].total, 10);
 
     // Get paginated results
     const limit = query.limit || 10;
@@ -172,14 +175,14 @@ export class EventsRepository {
 
       const eventsByType: Record<string, number> = {};
       byTypeResult.rows.forEach((row) => {
-        eventsByType[row.event_type] = parseInt(row.count, 10);
+        eventsByType[row.event_type] = Number.parseInt(row.count, 10);
       });
 
       return {
-        totalEvents: parseInt(totalResult.rows[0].count, 10),
+        totalEvents: Number.parseInt(totalResult.rows[0].count, 10),
         eventsByType,
-        uniqueUsers: parseInt(usersResult.rows[0].count, 10),
-        uniqueSessions: parseInt(sessionsResult.rows[0].count, 10),
+        uniqueUsers: Number.parseInt(usersResult.rows[0].count, 10),
+        uniqueSessions: Number.parseInt(sessionsResult.rows[0].count, 10),
       };
     } catch (error) {
       logger.error('Failed to get statistics', {
