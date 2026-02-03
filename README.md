@@ -67,8 +67,8 @@ Built with modern DevOps practices including Infrastructure as Code (Docker), CI
 
 ## 📦 Prerequisites
 
-- **Node.js** >= 20.0.0
-- **npm** >= 10.0.0
+- **Node.js** >= 25.0.0
+- **npm** >= 11.0.0
 - **Docker** >= 24.0.0 (optional, for containerized deployment)
 - **PostgreSQL** >= 16.0 (if running without Docker)
 

@@ -10,7 +10,7 @@ export class EventsController {
     this.eventProcessor = new EventProcessorService();
   }
 
-  createEvent = async (req: Request, res: Response, next: NextFunction) => {
+  createEvent = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const event: Event = req.body;
       const ipAddress = (req.ip || req.socket.remoteAddress) as string;
@@ -34,7 +34,7 @@ export class EventsController {
     }
   };
 
-  getEvents = async (req: Request, res: Response, next: NextFunction) => {
+  getEvents = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const query: EventQuery = req.query;
       const result = await this.eventProcessor.getEvents(query);
@@ -52,16 +52,17 @@ export class EventsController {
     }
   };
 
-  getEventById = async (req: Request, res: Response, next: NextFunction) => {
+  getEventById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { id } = req.params;
       const event = await this.eventProcessor.getEventById(id);
 
       if (!event) {
-        return res.status(404).json({
+        res.status(404).json({
           success: false,
           error: 'Event not found',
         });
+        return;
       }
 
       res.status(200).json({
@@ -76,7 +77,7 @@ export class EventsController {
     }
   };
 
-  getStatistics = async (_req: Request, res: Response, next: NextFunction) => {
+  getStatistics = async (_req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const stats = await this.eventProcessor.getStatistics();
 
