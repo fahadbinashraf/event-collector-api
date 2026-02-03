@@ -26,13 +26,11 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      - name: Install dependencies with retry
-        uses: nick-fields/retry-action@v3
-        with:
-          timeout_minutes: 10
-          max_attempts: 3
-          retry_on: error
-          command: npm ci --prefer-offline --no-audit
+      - name: Install dependencies
+        run: |
+          for i in 1 2 3; do
+            npm ci --prefer-offline --no-audit && break || sleep 5
+          done
 
       - name: Run ESLint
         run: npm run lint
@@ -54,13 +52,11 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      - name: Install dependencies with retry
-        uses: nick-fields/retry-action@v3
-        with:
-          timeout_minutes: 10
-          max_attempts: 3
-          retry_on: error
-          command: npm ci --prefer-offline --no-audit
+      - name: Install dependencies
+        run: |
+          for i in 1 2 3; do
+            npm ci --prefer-offline --no-audit && break || sleep 5
+          done
 
       - name: Run TypeScript compiler
         run: npm run typecheck
@@ -94,13 +90,11 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      - name: Install dependencies with retry
-        uses: nick-fields/retry-action@v3
-        with:
-          timeout_minutes: 10
-          max_attempts: 3
-          retry_on: error
-          command: npm ci --prefer-offline --no-audit
+      - name: Install dependencies
+        run: |
+          for i in 1 2 3; do
+            npm ci --prefer-offline --no-audit && break || sleep 5
+          done
 
       - name: Wait for PostgreSQL
         run: |
@@ -145,13 +139,11 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      - name: Install dependencies with retry
-        uses: nick-fields/retry-action@v3
-        with:
-          timeout_minutes: 10
-          max_attempts: 3
-          retry_on: error
-          command: npm ci --prefer-offline --no-audit
+      - name: Install dependencies
+        run: |
+          for i in 1 2 3; do
+            npm ci --prefer-offline --no-audit && break || sleep 5
+          done
 
       - name: Build application
         run: npm run build
