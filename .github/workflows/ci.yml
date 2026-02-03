@@ -27,7 +27,16 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
+        id: npm-install
         run: npm ci
+        continue-on-error: true
+
+      - name: Display npm logs on failure
+        if: steps.npm-install.outcome == 'failure'
+        run: |
+          echo "npm ci failed. Displaying npm debug logs:"
+          cat ~/.npm/_logs/*-debug-*.log || echo "No log files found"
+          exit 1
 
       - name: Run ESLint
         run: npm run lint
@@ -50,7 +59,16 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
+        id: npm-install
         run: npm ci
+        continue-on-error: true
+
+      - name: Display npm logs on failure
+        if: steps.npm-install.outcome == 'failure'
+        run: |
+          echo "npm ci failed. Displaying npm debug logs:"
+          cat ~/.npm/_logs/*-debug-*.log || echo "No log files found"
+          exit 1
 
       - name: Run TypeScript compiler
         run: npm run typecheck
@@ -85,7 +103,16 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
+        id: npm-install
         run: npm ci
+        continue-on-error: true
+
+      - name: Display npm logs on failure
+        if: steps.npm-install.outcome == 'failure'
+        run: |
+          echo "npm ci failed. Displaying npm debug logs:"
+          cat ~/.npm/_logs/*-debug-*.log || echo "No log files found"
+          exit 1
 
       - name: Wait for PostgreSQL
         run: |
@@ -131,7 +158,16 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
+        id: npm-install
         run: npm ci
+        continue-on-error: true
+
+      - name: Display npm logs on failure
+        if: steps.npm-install.outcome == 'failure'
+        run: |
+          echo "npm ci failed. Displaying npm debug logs:"
+          cat ~/.npm/_logs/*-debug-*.log || echo "No log files found"
+          exit 1
 
       - name: Build application
         run: npm run build
