@@ -1,4 +1,4 @@
-import useragent from 'useragent';
+import { UAParser } from 'ua-parser-js';
 import { Event, EnrichedEvent } from '../types/events';
 import logger from '../utils/logger';
 
@@ -15,11 +15,12 @@ export class EnrichmentService {
     // Parse user agent if provided
     if (userAgent) {
       try {
-        const agent = useragent.parse(userAgent);
+        const parser = new UAParser(userAgent);
+        const result = parser.getResult();
         enriched.metadata.browser = {
-          name: agent.family,
-          version: agent.toVersion(),
-          os: agent.os.toString(),
+          name: result.browser.name || 'Unknown',
+          version: result.browser.version || '',
+          os: result.os.name ? `${result.os.name} ${result.os.version || ''}`.trim() : 'Unknown',
         };
       } catch (error) {
         logger.warn('Failed to parse user agent', {
