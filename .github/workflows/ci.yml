@@ -23,14 +23,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '25'
+          node-version: '25.5.0'
           cache: 'npm'
 
       - name: Install dependencies
-        run: |
-          for i in 1 2 3; do
-            npm ci --prefer-offline --no-audit && break || sleep 5
-          done
+        run: npm ci --force
 
       - name: Run ESLint
         run: npm run lint
@@ -49,14 +46,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '25'
+          node-version: '25.5.0'
           cache: 'npm'
 
       - name: Install dependencies
-        run: |
-          for i in 1 2 3; do
-            npm ci --prefer-offline --no-audit && break || sleep 5
-          done
+        run: npm ci --force
 
       - name: Run TypeScript compiler
         run: npm run typecheck
@@ -87,14 +81,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '25'
+          node-version: '25.5.0'
           cache: 'npm'
 
       - name: Install dependencies
-        run: |
-          for i in 1 2 3; do
-            npm ci --prefer-offline --no-audit && break || sleep 5
-          done
+        run: npm ci --force
 
       - name: Wait for PostgreSQL
         run: |
@@ -136,14 +127,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '25'
+          node-version: '25.5.0'
           cache: 'npm'
 
       - name: Install dependencies
-        run: |
-          for i in 1 2 3; do
-            npm ci --prefer-offline --no-audit && break || sleep 5
-          done
+        run: npm ci --force
 
       - name: Build application
         run: npm run build

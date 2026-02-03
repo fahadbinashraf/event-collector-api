@@ -1,5 +1,5 @@
 # Build stage
-FROM nn-docker.artifactory.insim.biz/node:25-alpine AS builder
+FROM node:25-alpine AS builder
 
 WORKDIR /app
 
@@ -17,7 +17,7 @@ COPY src ./src
 RUN npm run build
 
 # Production stage
-FROM nn-docker.artifactory.insim.biz/node:25-alpine
+FROM node:25-alpine
 
 WORKDIR /app
 
