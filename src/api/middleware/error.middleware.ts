@@ -6,12 +6,7 @@ export interface ApiError extends Error {
   isOperational?: boolean;
 }
 
-export const errorHandler = (
-  error: ApiError,
-  req: Request,
-  res: Response,
-  _next: NextFunction
-) => {
+export const errorHandler = (error: ApiError, req: Request, res: Response, _next: NextFunction) => {
   const statusCode = error.statusCode || 500;
   const isOperational = error.isOperational || false;
 

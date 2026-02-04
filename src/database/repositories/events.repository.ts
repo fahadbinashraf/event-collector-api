@@ -37,7 +37,8 @@ export class EventsRepository {
   }
 
   async createEvent(params: CreateEventParams): Promise<StoredEvent> {
-    const { eventType, userId, sessionId, timestamp, rawData, enrichedData, ipAddress, userAgent } = params;
+    const { eventType, userId, sessionId, timestamp, rawData, enrichedData, ipAddress, userAgent } =
+      params;
     const id = uuidv4();
     const query = `
       INSERT INTO events (
@@ -162,7 +163,8 @@ export class EventsRepository {
       total: 'SELECT COUNT(*) as count FROM events',
       byType: 'SELECT event_type, COUNT(*) as count FROM events GROUP BY event_type',
       uniqueUsers: 'SELECT COUNT(DISTINCT user_id) as count FROM events WHERE user_id IS NOT NULL',
-      uniqueSessions: 'SELECT COUNT(DISTINCT session_id) as count FROM events WHERE session_id IS NOT NULL',
+      uniqueSessions:
+        'SELECT COUNT(DISTINCT session_id) as count FROM events WHERE session_id IS NOT NULL',
     };
 
     try {

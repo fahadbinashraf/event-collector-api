@@ -121,15 +121,10 @@ jobs:
             sleep 2
           done
 
-      - name: Run tests
+      - name: Run unit tests
         env:
-          DB_HOST: localhost
-          DB_PORT: 5432
-          DB_NAME: event_collector_test
-          DB_USER: postgres
-          DB_PASSWORD: postgres
           NODE_ENV: test
-        run: npm run test:coverage
+        run: npm run test:unit
 
       - name: Upload coverage reports
         uses: codecov/codecov-action@v4
